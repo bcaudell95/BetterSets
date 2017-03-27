@@ -6,6 +6,9 @@ import org.junit.Test;
  * Created by brandon on 3/27/17.
  */
 public class SingleSetTest {
+    /*
+    Tests the simple operations on a single set
+     */
     @Test
     public void TestInsertion() {
         NestedSet<Integer> set = new NestedSet<>();

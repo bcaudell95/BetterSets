@@ -105,11 +105,11 @@ public class NestedSet<T> extends HashSet<NestedSetItem<T>> {
 
     public NestedSet<T> spawnChild() {
         // Get a set of all its parents
-        HashSet<NestedSet<T>> itsParents = new HashSet<>(this.parentSets);
+        Collection<NestedSet<T>> itsParents = new ArrayList<>(this.parentSets);
         itsParents.add(this);
 
         // Likewise for its children
-        HashSet<NestedSet<T>> itsChildren = new HashSet<>(this.childSets);
+        Collection<NestedSet<T>> itsChildren = new ArrayList<>(this.childSets);
 
         // Spawn the new child
         NestedSet<T> newChild = new NestedSet<>(itsParents, itsChildren);
@@ -291,7 +291,47 @@ public class NestedSet<T> extends HashSet<NestedSetItem<T>> {
     private void addChildSet(NestedSet<T> child) {
         this.childSets.add(child);
         for(NestedSet<T> parent : this.parentSets) {
-            parent.addChildSet(child);
+            parent.childSets.add(child);
         }
+    }
+
+    /*
+    Methods to determine the relationship between two NestedSets
+     */
+
+    public boolean isChildOf(NestedSet<T> other) {
+        return this.parentSets.contains(other);
+    }
+
+    public boolean isParentOf(NestedSet<T> other) {
+        return this.childSets.contains(other);
+    }
+
+    /*
+    Small methods mostly used for testing
+     */
+    public int numberOfChildrenSets() {
+        return this.childSets.size();
+    }
+
+    public int numberOfParentSets() {
+        return this.parentSets.size();
+    }
+
+    /*
+    AbstractSet has some goofy implementations of equals and hashCode that cause lots of problems with this class.
+    I need to go back and understand why they do what they do, but in the meantime, using the Object implementation of
+        these methods here seems to work just fine.
+     */
+
+    @Override
+    public boolean equals(Object o) {
+        NestedSet<T> other = (NestedSet<T>) o;
+        return this.hashCode() == other.hashCode();
+    }
+
+    @Override
+    public int hashCode() {
+        return System.identityHashCode(this);
     }
 }
