@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="da42f4d2-4fab-4678-91cf-8ded1ed1b0b1" name="Default" comment="" />
+    <list default="true" id="da42f4d2-4fab-4678-91cf-8ded1ed1b0b1" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/NestedSet.java" afterPath="$PROJECT_DIR$/src/NestedSet.java" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -36,17 +38,13 @@
       <file leaf-file-name="NestedSet.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/NestedSet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="106" column="31" lean-forward="true" selection-start-line="106" selection-start-column="31" selection-end-line="106" selection-end-column="31" />
+            <state relative-caret-position="202">
+              <caret line="33" column="24" lean-forward="false" selection-start-line="33" selection-start-column="24" selection-end-line="33" selection-end-column="24" />
               <folding>
-                <element signature="e#1068#1069#0" expanded="true" />
-                <element signature="e#1108#1109#0" expanded="true" />
-                <element signature="e#1158#1159#0" expanded="true" />
-                <element signature="e#1197#1198#0" expanded="true" />
-                <element signature="e#3069#3070#0" expanded="true" />
-                <element signature="e#3128#3129#0" expanded="true" />
-                <element signature="e#4016#4017#0" expanded="true" />
-                <element signature="e#4078#4079#0" expanded="true" />
+                <element signature="e#1331#1332#0" expanded="true" />
+                <element signature="e#1390#1391#0" expanded="true" />
+                <element signature="e#2185#2186#0" expanded="true" />
+                <element signature="e#2247#2248#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -60,6 +58,11 @@
         <option value="Class" />
       </list>
     </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>parentSets</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -435,17 +438,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/NestedSet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="106" column="31" lean-forward="true" selection-start-line="106" selection-start-column="31" selection-end-line="106" selection-end-column="31" />
+        <state relative-caret-position="202">
+          <caret line="33" column="24" lean-forward="false" selection-start-line="33" selection-start-column="24" selection-end-line="33" selection-end-column="24" />
           <folding>
-            <element signature="e#1068#1069#0" expanded="true" />
-            <element signature="e#1108#1109#0" expanded="true" />
-            <element signature="e#1158#1159#0" expanded="true" />
-            <element signature="e#1197#1198#0" expanded="true" />
-            <element signature="e#3069#3070#0" expanded="true" />
-            <element signature="e#3128#3129#0" expanded="true" />
-            <element signature="e#4016#4017#0" expanded="true" />
-            <element signature="e#4078#4079#0" expanded="true" />
+            <element signature="e#1331#1332#0" expanded="true" />
+            <element signature="e#1390#1391#0" expanded="true" />
+            <element signature="e#2185#2186#0" expanded="true" />
+            <element signature="e#2247#2248#0" expanded="true" />
           </folding>
         </state>
       </provider>
