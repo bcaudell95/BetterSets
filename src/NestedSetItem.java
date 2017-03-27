@@ -1,4 +1,5 @@
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 
 /**
@@ -8,27 +9,36 @@ public class NestedSetItem<T> {
     private T value;
     private Collection<NestedSet<T>> sets;
 
-    public NestedSetItem(T value) {
+    NestedSetItem(T value) {
         this.value = value;
+        this.sets = new HashSet<>();
     }
 
-    public void addContainingSet(NestedSet<T> set) {
+    void addContainingSet(NestedSet<T> set) {
         this.sets.add(set);
     }
 
-    public void removeContainingSet(NestedSet<T> set) {
+    void removeContainingSet(NestedSet<T> set) {
         this.sets.remove(set);
     }
 
     public void removeFromAllSets() {
-        Iterator<NestedSet<T>> it = this.sets.iterator();
-        while(it.hasNext()) {
-            NestedSet<T> next = it.next();
-            next.remove(this);
+        for (NestedSet<T> containingSet : this.sets) {
+            containingSet.remove(this);
         }
     }
 
     public T getValue() {
         return value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return (o instanceof NestedSetItem) && (this.value == ((NestedSetItem) o).value);
+    }
+
+    @Override
+    public int hashCode() {
+        return this.value.hashCode();
     }
 }

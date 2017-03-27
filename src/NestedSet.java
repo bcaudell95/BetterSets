@@ -46,20 +46,22 @@ public class NestedSet<T> extends HashSet<NestedSetItem<T>> {
     Also adds it to all parents, maintaining the subset relationships.
      */
 
-    public void addItem(T value) {
-        this.addSetItem(new NestedSetItem<>(value));
+    public boolean addItem(T value) {
+        return this.addSetItem(new NestedSetItem<>(value));
     }
 
-    private void addSetItem(NestedSetItem<T> setItem) {
+    private boolean addSetItem(NestedSetItem<T> setItem) {
         // Attempt to put this setItem in this NestedSet.
         // Note that Collections.add() returns true if the collection was modified (i.e. the element
         //      was added)
-        if(super.add(setItem)) {
+        boolean result = super.add(setItem);
+        if(result) {
 
             setItem.addContainingSet(this);
             addToAllParents(setItem);
 
         }
+        return result;
     }
 
     private void addToAllParents(NestedSetItem<T> setItem) {
@@ -74,17 +76,19 @@ public class NestedSet<T> extends HashSet<NestedSetItem<T>> {
     Also removes it from all children sets, preserving the subset relationship
      */
 
-    public void removeItem(T value) {
-        this.removeSetItem(new NestedSetItem<>(value));
+    public boolean removeItem(T value) {
+        return this.removeSetItem(new NestedSetItem<>(value));
     }
 
-    private void removeSetItem(NestedSetItem<T> setItem) {
+    private boolean removeSetItem(NestedSetItem<T> setItem) {
         // Attempt to remove set item from this set.
         // Note that Collections.remove() returns true if the item was removed successfully
-        if(this.remove(setItem)) {
+        boolean result = this.remove(setItem);
+        if(result) {
             setItem.removeContainingSet(this);
             removeFromChildren(setItem);
         }
+        return result;
     }
 
     private void removeFromChildren(NestedSetItem<T> setItem) {
