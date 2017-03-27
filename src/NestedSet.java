@@ -110,6 +110,14 @@ public class NestedSet<T> extends HashSet<NestedSetItem<T>> {
         // Spawn the new child
         NestedSet<T> newChild = new NestedSet<>(itsParents, itsChildren);
 
+        // Populate the child with all the elements from this set
+        newChild.addAll(this);
+
+        // Add the new child as a containing set for all the items in this set
+        for (NestedSetItem<T> item: this) {
+            item.addContainingSet(newChild);
+        }
+
         // Assign it as a child to all its parents (will be done via loop in this method)
         this.addChildSet(newChild);
 
@@ -134,8 +142,16 @@ public class NestedSet<T> extends HashSet<NestedSetItem<T>> {
         HashSet<NestedSet<T>> itsChildren = new HashSet<>(this.childSets);
         itsChildren.add(this);
 
-        // Spawn the new child
+        // Spawn the new parent
         NestedSet<T> newParent = new NestedSet<>(itsParents, itsChildren);
+
+        // Populate the parent
+        newParent.addAll(this);
+
+        // Add the new parent as a containing set for all the items in this set
+        for (NestedSetItem<T> item: this) {
+            item.addContainingSet(newParent);
+        }
 
         // Assign it as a parent to all its children (will be done via loop in this method)
         this.addParentSet(newParent);
@@ -187,7 +203,20 @@ public class NestedSet<T> extends HashSet<NestedSetItem<T>> {
         childrenOfUnion.addAll(this.childSets);
         childrenOfUnion.addAll(other.childSets);
 
-        return new NestedSet<>(new HashSet<>(), childrenOfUnion);
+        // instantiate the new union
+        NestedSet<T> newUnion = new NestedSet<>(new HashSet<>(), childrenOfUnion);
+
+        // populate it with everything from the union of these sets
+        HashSet<NestedSetItem<T>> itemsToInsert = new HashSet<>(this);
+        itemsToInsert.addAll(other);
+        newUnion.addAll(itemsToInsert);
+
+        // add the new union as a containing set for all the inserted items
+        for(NestedSetItem<T> item : itemsToInsert) {
+            item.addContainingSet(newUnion);
+        }
+
+        return newUnion;
     }
 
     /*
@@ -227,7 +256,20 @@ public class NestedSet<T> extends HashSet<NestedSetItem<T>> {
         parentsOfIntersection.addAll(this.parentSets);
         parentsOfIntersection.addAll(other.parentSets);
 
-        return new NestedSet<>(parentsOfIntersection, new HashSet<>());
+        // Instantiate the new intersection set
+        NestedSet<T> newIntersection = new NestedSet<>(parentsOfIntersection, new HashSet<>());
+
+        // Populate it with everything in the intersection of these two sets
+        HashSet<NestedSetItem<T>> itemsToInsert = new HashSet<>(this);
+        itemsToInsert.retainAll(other);
+        newIntersection.addAll(itemsToInsert);
+
+        // add the new union as a containing set for all the inserted items
+        for(NestedSetItem<T> item : itemsToInsert) {
+            item.addContainingSet(newIntersection);
+        }
+
+        return newIntersection;
     }
 
     /*

@@ -38,8 +38,8 @@
       <file leaf-file-name="NestedSet.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/NestedSet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-401">
-              <caret line="140" column="16" lean-forward="true" selection-start-line="140" selection-start-column="16" selection-end-line="140" selection-end-column="16" />
+            <state relative-caret-position="2380">
+              <caret line="268" column="49" lean-forward="false" selection-start-line="268" selection-start-column="49" selection-end-line="268" selection-end-column="49" />
               <folding>
                 <element signature="e#1442#1443#0" expanded="true" />
                 <element signature="e#1501#1502#0" expanded="true" />
@@ -395,9 +395,9 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25751072" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25751072" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.35193133" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24964234" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -418,24 +418,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/NestedSetItem.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" column="5" lean-forward="true" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#230#231#0" expanded="true" />
-            <element signature="e#264#265#0" expanded="true" />
-            <element signature="e#318#319#0" expanded="true" />
-            <element signature="e#352#353#0" expanded="true" />
-            <element signature="e#409#410#0" expanded="true" />
-            <element signature="e#446#447#0" expanded="true" />
-            <element signature="e#690#691#0" expanded="true" />
-            <element signature="e#718#719#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home/src.zip!/java/util/Set.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="158">
@@ -463,10 +445,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/NestedSetItem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="5" lean-forward="true" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#230#231#0" expanded="true" />
+            <element signature="e#264#265#0" expanded="true" />
+            <element signature="e#318#319#0" expanded="true" />
+            <element signature="e#352#353#0" expanded="true" />
+            <element signature="e#409#410#0" expanded="true" />
+            <element signature="e#446#447#0" expanded="true" />
+            <element signature="e#690#691#0" expanded="true" />
+            <element signature="e#718#719#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/NestedSet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-401">
-          <caret line="140" column="16" lean-forward="true" selection-start-line="140" selection-start-column="16" selection-end-line="140" selection-end-column="16" />
+        <state relative-caret-position="2380">
+          <caret line="268" column="49" lean-forward="false" selection-start-line="268" selection-start-column="49" selection-end-line="268" selection-end-column="49" />
           <folding>
             <element signature="e#1442#1443#0" expanded="true" />
             <element signature="e#1501#1502#0" expanded="true" />
