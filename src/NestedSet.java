@@ -18,28 +18,32 @@ public class NestedSet<T> extends HashSet<NestedSetItem<T>> {
     public NestedSet() {
         this.parentSets = new HashSet<>();
         this.childSets = new HashSet<>();
-        this.unions = new HashMap<>();
-        this.intersections = new HashMap<>();
+        createEmptyUnionAndIntersectionSets();
     }
 
     public NestedSet(Collection<? extends NestedSetItem<T>> c) {
         super(c);
         this.parentSets = new HashSet<>();
         this.childSets = new HashSet<>();
+        createEmptyUnionAndIntersectionSets();
+    }
+
+    // This constructor is private because initialization of parent and children sets needs to be handled
+    //      with care.
+    private NestedSet(Collection<NestedSet<T>> parentSets, Collection<NestedSet<T>> childSets) {
+        this.parentSets = parentSets;
+        this.childSets = childSets;
+        this.createEmptyUnionAndIntersectionSets();
+    }
+
+    private void createEmptyUnionAndIntersectionSets() {
         this.unions = new HashMap<>();
         this.intersections = new HashMap<>();
     }
 
-    // This constructor is private because initialization of parent and children sets needs to be handled
-    //      with care.  
-    private NestedSet(Collection<NestedSet<T>> parentSets, Collection<NestedSet<T>> childSets) {
-        this.parentSets = parentSets;
-        this.childSets = childSets;
-    }
-
     /*
     Add item to this set
-    Also recursively adds it to all parents, maintaining the subset relationships.
+    Also adds it to all parents, maintaining the subset relationships.
      */
 
     public void addItem(T value) {
@@ -50,7 +54,7 @@ public class NestedSet<T> extends HashSet<NestedSetItem<T>> {
         // Attempt to put this setItem in this NestedSet.
         // Note that Collections.add() returns true if the collection was modified (i.e. the element
         //      was added)
-        if(this.add(setItem)) {
+        if(super.add(setItem)) {
 
             setItem.addContainingSet(this);
             addToAllParents(setItem);
@@ -59,15 +63,15 @@ public class NestedSet<T> extends HashSet<NestedSetItem<T>> {
     }
 
     private void addToAllParents(NestedSetItem<T> setItem) {
-        // Now we recursively add it to each of our parent NestedSets
         for (NestedSet<T> parent : this.parentSets) {
+            setItem.addContainingSet(parent);
             parent.add(setItem);
         }
     }
 
     /*
     Remove an item from this NestedSet
-    Also recursively removes it from all children sets, preserving the subset relationship
+    Also removes it from all children sets, preserving the subset relationship
      */
 
     public void removeItem(T value) {
@@ -84,29 +88,64 @@ public class NestedSet<T> extends HashSet<NestedSetItem<T>> {
     }
 
     private void removeFromChildren(NestedSetItem<T> setItem) {
-        // Recursively remove it from all children sets
         for (NestedSet<T> parent : this.childSets) {
+            setItem.removeContainingSet(parent);
             parent.remove(setItem);
         }
     }
 
     /*
-    Add and remove parent and child NestedSets
-    Note that when a child is added, it is inherited by all parents, and when a parent is added, it inherits all children
+    Creates an immediate child set below this one.
+    That child inherits all of this set's children, and is inherited by all of this set's parents
      */
 
-    private void addParentSet(NestedSet<T> parent) {
-        this.parentSets.add(parent);
-        for (NestedSet<T> child : this.childSets) {
-            child.parentSets.add(parent);
+    public NestedSet<T> spawnChild() {
+        // Get a set of all its parents
+        HashSet<NestedSet<T>> itsParents = new HashSet<>(this.parentSets);
+        itsParents.add(this);
+
+        // Likewise for its children
+        HashSet<NestedSet<T>> itsChildren = new HashSet<>(this.childSets);
+
+        // Spawn the new child
+        NestedSet<T> newChild = new NestedSet<>(itsParents, itsChildren);
+
+        // Assign it as a child to all its parents (will be done via loop in this method)
+        this.addChildSet(newChild);
+
+        // Assign it as a parent to all its children (grandchildren of this)
+        for(NestedSet<T> grandchild : itsChildren) {
+            grandchild.parentSets.add(newChild);
         }
+
+        return newChild;
     }
 
-    private void addChildSet(NestedSet<T> child) {
-        this.childSets.add(child);
-        for(NestedSet<T> parent : this.parentSets) {
-            parent.addChildSet(child);
+    /*
+    Creates an immediate parent set above this one.
+    That parent inherits all of this set's children, and is inherited by all of this set's parents
+     */
+
+    public NestedSet<T> spawnParent() {
+        // Get a set of all its parents
+        HashSet<NestedSet<T>> itsParents = new HashSet<>(this.parentSets);
+
+        // Likewise for its children
+        HashSet<NestedSet<T>> itsChildren = new HashSet<>(this.childSets);
+        itsChildren.add(this);
+
+        // Spawn the new child
+        NestedSet<T> newParent = new NestedSet<>(itsParents, itsChildren);
+
+        // Assign it as a parent to all its children (will be done via loop in this method)
+        this.addParentSet(newParent);
+
+        // Assign it as a child to all its parents (grandparents of this)
+        for(NestedSet<T> grandparent : itsParents) {
+            grandparent.childSets.add(newParent);
         }
+
+        return newParent;
     }
 
     /*
@@ -189,5 +228,24 @@ public class NestedSet<T> extends HashSet<NestedSetItem<T>> {
         parentsOfIntersection.addAll(other.parentSets);
 
         return new NestedSet<>(parentsOfIntersection, new HashSet<>());
+    }
+
+    /*
+    Add and remove parent and child NestedSets
+    Note that when a child is added, it is inherited by all parents, and when a parent is added, it inherits all children
+     */
+
+    private void addParentSet(NestedSet<T> parent) {
+        this.parentSets.add(parent);
+        for (NestedSet<T> child : this.childSets) {
+            child.parentSets.add(parent);
+        }
+    }
+
+    private void addChildSet(NestedSet<T> child) {
+        this.childSets.add(child);
+        for(NestedSet<T> parent : this.parentSets) {
+            parent.addChildSet(child);
+        }
     }
 }
