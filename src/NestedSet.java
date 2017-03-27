@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by brandon on 3/26/17.
@@ -106,6 +107,17 @@ public class NestedSet<T> extends HashSet<NestedSetItem<T>> {
     }
 
     /*
+    Unwraps the values inside and gives a standard collection
+     */
+    public HashSet<T> getValues() {
+        HashSet<T> output = new HashSet<T>();
+        for(NestedSetItem<T> item : this) {
+            output.add(item.getValue());
+        }
+        return output;
+    }
+
+    /*
     Creates an immediate child set below this one.
     That child inherits all of this set's children, and is inherited by all of this set's parents
      */
@@ -184,7 +196,9 @@ public class NestedSet<T> extends HashSet<NestedSetItem<T>> {
      */
 
     public NestedSet<T> unionWith(NestedSet<T> other) {
-        if(this.childSets.contains(other)) {
+        if(this.equals(other)) {
+            return this;
+        } else if(this.childSets.contains(other)) {
             return this;
         } else if(this.parentSets.contains(other)) {
             return other;
@@ -239,7 +253,9 @@ public class NestedSet<T> extends HashSet<NestedSetItem<T>> {
      */
 
     public NestedSet<T> intersectionWith(NestedSet<T> other) {
-        if(this.childSets.contains(other)) {
+        if(this.equals(other)) {
+            return this;
+        } else if(this.childSets.contains(other)) {
             return other;
         } else if(this.parentSets.contains(other)) {
             return this;
@@ -317,11 +333,12 @@ public class NestedSet<T> extends HashSet<NestedSetItem<T>> {
     /*
     Small methods mostly used for testing
      */
-    public int numberOfChildrenSets() {
+
+    int numberOfChildrenSets() {
         return this.childSets.size();
     }
 
-    public int numberOfParentSets() {
+    int numberOfParentSets() {
         return this.parentSets.size();
     }
 
