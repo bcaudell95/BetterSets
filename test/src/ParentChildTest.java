@@ -1,6 +1,9 @@
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 import static sun.misc.Version.println;
 
 /**
@@ -98,9 +101,32 @@ public class ParentChildTest {
     public void TestThreeGenerationsOfSetsTopDown() {
         NestedSet<Integer> grandparent = new NestedSet<>();
         NestedSet<Integer> parent = grandparent.spawnChild();
-        parent.addItem(100);
         NestedSet<Integer> child = parent.spawnChild();
 
+        validateThreeGenerationRelationships(grandparent, parent, child);
+    }
+
+    @Test
+    public void TestThreeGenerationsOfSetsBottomUp() {
+        NestedSet<Integer> child = new NestedSet<>();
+        NestedSet<Integer> parent = child.spawnParent();
+        NestedSet<Integer> grandparent = parent.spawnParent();
+
+        validateThreeGenerationRelationships(grandparent, parent, child);
+    }
+
+    @Test
+    public void TestThreeGenerationsOfSetsMiddleOut() {
+        NestedSet<Integer> parent = new NestedSet<>();
+        NestedSet<Integer> grandparent = parent.spawnParent();
+        NestedSet<Integer> child = parent.spawnChild();
+
+        validateThreeGenerationRelationships(grandparent, parent, child);
+    }
+
+    private void validateThreeGenerationRelationships(NestedSet<Integer> grandparent,
+                                                      NestedSet<Integer> parent,
+                                                      NestedSet<Integer> child) {
         Assert.assertTrue(grandparent.isParentOf(parent));
         Assert.assertTrue(grandparent.isParentOf(child));
         Assert.assertFalse(grandparent.isChildOf(parent));
@@ -124,5 +150,72 @@ public class ParentChildTest {
 
         Assert.assertEquals(2, child.numberOfParentSets());
         Assert.assertEquals(0, child.numberOfChildrenSets());
+    }
+
+    @Test
+    public void TestInheritance() {
+        // newly-spawned children and parents should start with the same contents as the source
+        NestedSet<Integer> parent = new NestedSet<>();
+        parent.addItem(21);
+        parent.addItem(45);
+
+        NestedSet<Integer> grandparent = parent.spawnParent();
+        NestedSet<Integer> child = parent.spawnChild();
+
+        Integer[] parentContents = extractContents(parent);
+        Integer[] grandparentContents = extractContents(grandparent);
+        Integer[] childContents = extractContents(child);
+
+        Assert.assertArrayEquals(parentContents, grandparentContents);
+        Assert.assertArrayEquals(parentContents, childContents);
+    }
+
+    private Integer[] extractContents(NestedSet<Integer> set) {
+        Integer[] output = new Integer[set.size()];
+
+        int i = 0;
+        for(NestedSetItem<Integer> item : set) {
+            output[i++] = item.getValue();
+        }
+
+        Arrays.sort(output);
+
+        return output;
+    }
+
+    @Test
+    public void TestInsertsIntoThreeGenerations() {
+        NestedSet<Integer> grandparent = new NestedSet<>();
+        NestedSet<Integer> parent = grandparent.spawnChild();
+        NestedSet<Integer> child = parent.spawnChild();
+
+        // As before, inserting into a child should insert into all parents, but not the reverse
+        grandparent.addItem(30);
+        parent.addItem(20);
+        child.addItem(10);
+
+        Assert.assertEquals(3, grandparent.size());
+        Assert.assertEquals(2, parent.size());
+        Assert.assertEquals(1, child.size());
+    }
+
+    @Test
+    public void TestDeletesFromThreeGenerations() {
+        NestedSet<Integer> grandparent = new NestedSet<>();
+
+        grandparent.addItem(10);
+        grandparent.addItem(20);
+        grandparent.addItem(30);
+
+        NestedSet<Integer> parent = grandparent.spawnChild();
+        NestedSet<Integer> child = parent.spawnChild();
+
+        // As before, deletes should propagate to children, but not parents
+        parent.removeItem(20);
+        child.removeItem(10);
+
+        Assert.assertEquals(3, grandparent.size());
+        Assert.assertEquals(2, parent.size());
+        Assert.assertEquals(1, child.size());
     }
 }

@@ -56,4 +56,13 @@ public class SingleSetTest {
 
         Assert.assertFalse(b);
     }
+
+    @Test
+    public void TestMembership() {
+        NestedSet<Integer> set = new NestedSet<>();
+        set.addItem(10);
+
+        Assert.assertTrue(set.containsItem(10));
+        Assert.assertFalse(set.containsItem(666));
+    }
 }

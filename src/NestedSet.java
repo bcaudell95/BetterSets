@@ -99,6 +99,13 @@ public class NestedSet<T> extends HashSet<NestedSetItem<T>> {
     }
 
     /*
+    Checks for containment of an item
+     */
+    public boolean containsItem(T value) {
+        return this.contains(new NestedSetItem<T>(value));
+    }
+
+    /*
     Creates an immediate child set below this one.
     That child inherits all of this set's children, and is inherited by all of this set's parents
      */
